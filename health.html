@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Timer with Music</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .timer {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Minimizing iframe display */
+        iframe {
+            width: 100%;
+            height: 80px;
+            margin-top: 20px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Meditation Timer</h1>
+    <div class="timer" id="timer">05:00</div>
+    <button onclick="startMeditation()">Start Meditation</button>
+</div>
+
+<!-- Embedded SoundCloud Player (Visible but minimal) -->
+<iframe id="soundcloudPlayer" 
+    scrolling="no" 
+    frameborder="no" 
+    allow="autoplay" 
+    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/110708147&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false">
+</iframe>
+
+<script>
+    let time = 300; // 5 minutes in seconds
+    let timerInterval;
+
+    function startMeditation() {
+        clearInterval(timerInterval); // Clear any existing interval
+        time = 300; // Reset timer to 5 minutes
+        playSoundCloud(); // Play SoundCloud music automatically
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        let minutes = Math.floor(time / 60);
+        let seconds = time % 60;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        document.getElementById('timer').textContent = `${minutes}:${seconds}`;
+        time--;
+
+        if (time < 0) {
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = "Time's Up!";
+            stopSoundCloud(); // Stop the SoundCloud music
+        }
+    }
+
+    function playSoundCloud() {
+        const player = document.getElementById('soundcloudPlayer').contentWindow;
+        player.postMessage({ method: 'play' }, '*'); // Play music
+    }
+
+    function stopSoundCloud() {
+        const player = document.getElementById('soundcloudPlayer').contentWindow;
+        player.postMessage({ method: 'pause' }, '*'); // Pause music
+    }
+</script>
+
+</body>
+</html>
