@@ -1,2 +1,2 @@
-# hindihealthchecker
- Hindi Health Checker could refer to a tool or software designed to assess the quality, accuracy, or readability of health
+# Mindful Meditation: Relaxation Timer with Music
+Welcome to Meditation Oasis, your personal sanctuary for mindfulness and relaxation. This intuitive meditation timer combines a soothing countdown with serene soundscapes to help you unwind, focus, and connect with your inner peace.
